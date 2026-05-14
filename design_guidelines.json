@@ -1,0 +1,97 @@
+{
+  "project_info": {
+    "domain": "Healthcare/Wellness (Dental)",
+    "theme": "Light",
+    "archetype": "1 (Organic & Earthy)",
+    "brand_name": "Smile Savers Dental Clinic",
+    "location": "Ghaziabad, Uttar Pradesh",
+    "phone": "097111 68810",
+    "accreditation": "NABH",
+    "vibe": "Pastel brown/beige, warm cream, aspirational, elegant, pure smile aesthetic."
+  },
+  "typography": {
+    "font_imports": "@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;400;500;600&family=Manrope:wght@300;400;500;600&display=swap');",
+    "heading_font": "font-family: 'Fraunces', serif;",
+    "body_font": "font-family: 'Manrope', sans-serif;",
+    "rules": {
+      "h1": "text-5xl md:text-7xl font-light tracking-tighter leading-[1.1]",
+      "h2": "text-4xl md:text-5xl font-light tracking-tight leading-tight",
+      "h3": "text-2xl md:text-3xl font-medium tracking-tight",
+      "body": "text-base md:text-lg font-light leading-relaxed text-[#5C534B]",
+      "overline": "text-xs font-semibold uppercase tracking-[0.2em] text-[#BCA38F]"
+    }
+  },
+  "colors": {
+    "background_main": "#FAF8F5",
+    "surface_beige": "#F5F0E6",
+    "primary_mocha": "#BCA38F",
+    "primary_hover": "#A88D79",
+    "text_dark": "#2C2621",
+    "text_muted": "#5C534B",
+    "accent_cream": "#E6D5C3",
+    "glass_bg": "rgba(255, 255, 255, 0.4)",
+    "glass_border": "rgba(255, 255, 255, 0.6)"
+  },
+  "ui_elements": {
+    "liquid_glass_button": "relative overflow-hidden rounded-[2rem] backdrop-blur-xl bg-white/50 border border-white/60 shadow-[0_8px_32px_rgba(188,163,143,0.2)] hover:bg-white/70 hover:shadow-[0_12px_40px_rgba(188,163,143,0.3)] active:scale-95 transition-all duration-500 text-[#2C2621] font-medium px-8 py-4 before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent before:-translate-x-full hover:before:animate-[shimmer_1.5s_infinite]",
+    "floating_action_cluster": "fixed bottom-6 right-6 z-50 flex flex-col gap-3 p-3 rounded-full backdrop-blur-2xl bg-[#FAF8F5]/70 border border-white/60 shadow-[0_12px_40px_rgba(0,0,0,0.08)]",
+    "action_cluster_icon": "w-12 h-12 flex items-center justify-center rounded-full bg-white/80 text-[#2C2621] hover:bg-[#BCA38F] hover:text-white transition-colors shadow-sm",
+    "cards": "rounded-[2rem] bg-gradient-to-b from-[#F5F0E6] to-[#FAF8F5] p-8 md:p-12 border border-white/50 shadow-sm",
+    "header": "fixed top-0 w-full z-50 backdrop-blur-xl bg-[#FAF8F5]/80 border-b border-white/50"
+  },
+  "animations": {
+    "smooth_scroll": "Lenis library must be used for momentum scrolling.",
+    "hero_cinematic": "GSAP ScrollTrigger: Hero image starts at scale 1.15 and scales to 1.0 on scroll. Headlines use staggered Y-axis reveal (opacity 0 to 1, y: 40 to 0).",
+    "page_transitions": "Subtle fade-in and slide-up (y: 20) for all main sections when entering viewport via GSAP ScrollTrigger.",
+    "hover_effects": "Cards slightly lift (-translate-y-2) with expanded shadow. Images within cards slowly zoom (scale 1.05) on hover."
+  },
+  "layouts": {
+    "spacing_system": "Hyper-generous. Use py-24 or py-32 for main sections. Use gap-12 or gap-16 in grids.",
+    "bento_grid": "For Services and Gallery. Mix span-1 and span-2 columns to create asymmetry.",
+    "header_structure": "Flex justify-between. Left: Smile Savers Clinic Text/Logo. Right: Text 'NABH Accredited' with a subtle medical cross icon + Main Nav + CTA."
+  },
+  "pages": {
+    "Home": "Cinematic hero, services bento grid, testimonial slider, doctors preview.",
+    "About": "Clinic history, NABH focus, interior gallery, mission.",
+    "Services": "List of treatments with aesthetic cards.",
+    "Service Detail": "Deep dive into treatment + 4-step booking stepper (Shadcn Tabs customized).",
+    "Doctors": "Grid of dentist profiles.",
+    "Gallery": "Masonry/Bento layout of clinic and patient smiles.",
+    "Blog": "Grid of aesthetic blog posts.",
+    "Blog Detail": "Clean editorial layout, Fraunces for heading, large cover image.",
+    "Testimonials": "Google review integration style but aesthetic (drag-slider).",
+    "Contact": "Map, form with liquid glass styling.",
+    "Booking": "Standalone 4-step booking flow."
+  },
+  "media_assets": [
+    {
+      "category": "hero_clinic",
+      "url": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80",
+      "alt": "Premium dental clinic interior"
+    },
+    {
+      "category": "dentist_portrait",
+      "url": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80",
+      "alt": "Smiling female dentist"
+    },
+    {
+      "category": "patient_smile",
+      "url": "https://images.unsplash.com/photo-1611690061822-b707a67bfebb?auto=format&fit=crop&q=80",
+      "alt": "Smiling patient with white teeth"
+    },
+    {
+      "category": "dental_tools",
+      "url": "https://images.unsplash.com/photo-1606265752439-1f18756aa5fc?auto=format&fit=crop&q=80",
+      "alt": "Modern dental equipment"
+    }
+  ],
+  "testing_requirements": "All interactive elements, buttons, links, and forms MUST have a 'data-testid' attribute using kebab-case role-based naming (e.g., 'data-testid=\"book-appointment-btn\"').",
+  "instructions_to_agent": [
+    "Do NOT use generic Tailwind colors (slate, blue, gray). ONLY use the hex codes provided in the colors section to maintain the pastel brown/beige aesthetic.",
+    "Add the font imports to index.css and configure tailwind.config.js to use Fraunces and Manrope.",
+    "Ensure all buttons use the 'liquid_glass_button' styling or a derivation of it.",
+    "Build the Floating Action Cluster globally (WhatsApp, AI Chat (Claude), Call).",
+    "Use Shadcn/UI for the 4-step booking system, but override the styles to match the warm, aesthetic, curved theme.",
+    "Implement GSAP and Lenis. Ensure robust cleanup in useEffects."
+  ]
+}
