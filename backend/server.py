@@ -347,6 +347,21 @@ app = FastAPI(title="Smile Savers Dental Clinic API")
 api_router = APIRouter(prefix="/api")
 
 
+
+FRONTEND_URL = os.environ.get(
+    "FRONTEND_URL",
+    "https://smilesaver-blue.vercel.app"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[FRONTEND_URL],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 def require_admin(x_admin_token: Optional[str] = Header(None)):
     if not x_admin_token or x_admin_token != ADMIN_TOKEN:
         raise HTTPException(401, "Invalid admin token")
