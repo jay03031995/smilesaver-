@@ -119,15 +119,15 @@ export default function Home() {
             <div ref={heroBadge} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/70 backdrop-blur border border-white/80 mb-7 shadow-sm">
               <span className="text-sm md:text-base font-semibold tracking-[0.08em] uppercase text-ink">{reviewSummary.clinic_name}</span>
             </div>
-            <h1 className="h-display text-5xl md:text-6xl lg:text-[5.2rem] text-ink mb-7 leading-[1.05]">
+            <h1 className="h-display text-[2.7rem] md:text-6xl lg:text-[5.2rem] text-ink mb-7 leading-[1.05]">
               <span ref={heroLine1} className="block overflow-hidden">{splitChars("Crafting smiles")}</span>
               <span ref={heroLine2} className="block italic font-light text-cocoa overflow-hidden">{splitChars("that whisper")}</span>
               <span ref={heroLine3} className="block overflow-hidden">{splitChars("confidence.")}</span>
             </h1>
-            <p ref={heroSub} className="text-lg md:text-xl text-inkmuted max-w-xl leading-relaxed mb-9 font-light">
+            <p ref={heroSub} className="text-lg md:text-xl text-inkmuted max-w-xl leading-relaxed mb-5 md:mb-9 font-light">
               NABH-accredited dental excellence in Ghaziabad. Where 16+ years of artistry meets the gentlest hands in the city.
             </p>
-            <div ref={heroCtas} className="flex flex-wrap gap-3">
+            <div ref={heroCtas} className="hidden md:flex flex-wrap gap-3">
               <Link to="/booking" className="liquid-glass-dark inline-flex items-center gap-2" data-testid="hero-book-btn">
                 Book Appointment <ArrowRight size={16}/>
               </Link>
@@ -136,7 +136,7 @@ export default function Home() {
               </Link>
             </div>
 
-            <div ref={heroStats} className="flex flex-wrap items-center gap-6 mt-12 pt-8 border-t border-cream/80">
+            <div ref={heroStats} className="flex flex-wrap items-center gap-6 mt-5 pt-5 border-t border-cream/80">
               <div>
                 <div className="font-serif text-3xl text-ink">16+</div>
                 <div className="text-xs tracking-[0.16em] uppercase text-inkmuted">Years</div>
