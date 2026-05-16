@@ -12,9 +12,7 @@ from typing import List, Optional
 from datetime import datetime, timezone
 from collections import defaultdict, deque
 
-from google.genai import types
 
-from google import genai
 
 from groq import Groq
 
@@ -331,8 +329,7 @@ else:
     local_db_conn = sqlite_db.conn
     db = sqlite_db
 
-EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY')
-GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
+
 GROQ_API_KEY = os.environ.get('GROQ_API_KEY')
 ADMIN_TOKEN = os.environ.get('ADMIN_TOKEN', 'smilesavers2026')
 CLINIC_NAME = "Smile Saver Dental Clinic"
