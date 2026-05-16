@@ -12,12 +12,7 @@ from typing import List, Optional
 from datetime import datetime, timezone
 from collections import defaultdict, deque
 
-try:
-    from emergentintegrations.llm.chat import LlmChat, UserMessage, ImageContent
-except ImportError:
-    LlmChat = None
-    UserMessage = None
-    ImageContent = None
+from google import genai
 
 try:
     import psycopg2
@@ -333,6 +328,7 @@ else:
     db = sqlite_db
 
 EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY')
+GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
 ADMIN_TOKEN = os.environ.get('ADMIN_TOKEN', 'smilesavers2026')
 CLINIC_NAME = "Smile Saver Dental Clinic"
 CLINIC_PHONE = "9711146547"
@@ -347,7 +343,6 @@ app = FastAPI(title="Smile Savers Dental Clinic API")
 api_router = APIRouter(prefix="/api")
 
 
-
 FRONTEND_URL = os.environ.get(
     "FRONTEND_URL",
     "https://smilesaver-blue.vercel.app"
@@ -355,8 +350,8 @@ FRONTEND_URL = os.environ.get(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[FRONTEND_URL],
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -1234,61 +1229,89 @@ async def create_contact(payload: ContactCreate):
 
 @api_router.post("/chat", response_model=ChatResponse)
 async def chat_with_ai(payload: ChatRequest):
-    if not EMERGENT_LLM_KEY or LlmChat is None:
+    gemini_key = os.environ.get('GEMINI_API_KEY')
+    
+    if not gemini_key:
         return ChatResponse(reply=_local_chat_reply(payload.message))
-
+    
     system_prompt = (
-        "You are 'Smile' — the friendly AI assistant for Smile Saver Dental Clinic in Ghaziabad, "
-        "Uttar Pradesh (NABH accredited, with a consistently strong Google rating). "
-        f"Phone: {CLINIC_PHONE}. Hours: opens 10 AM. "
+        "You are 'Smile' — the friendly AI assistant for Smile Saver Dental Clinic in Ghaziabad. "
+        f"Phone: {CLINIC_PHONE}. Hours: 10 AM to 8 PM. "
         "Help visitors with dental queries, service info, and guide them to book an appointment. "
         "Be warm, concise (2-4 sentences), and always end with a helpful next step."
     )
+    
     try:
-        chat = LlmChat(api_key=EMERGENT_LLM_KEY, session_id=payload.session_id, system_message=system_prompt
-                       ).with_model("anthropic", "claude-sonnet-4-5-20250929")
-        reply = await chat.send_message(UserMessage(text=payload.message))
-        return ChatResponse(reply=str(reply))
+        # ✅ NEW SDK SYNTAX
+        client = genai.Client(api_key=gemini_key)
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=f"{system_prompt}\n\nPatient query: {payload.message}"
+        )
+        
+        return ChatResponse(reply=response.text)
     except Exception as e:
-        logging.error(f"AI chat error: {e}")
+        logging.error(f"Gemini chat error: {e}")
         return ChatResponse(reply=_local_chat_reply(payload.message))
 
 
 @api_router.post("/smile-analysis", response_model=SmileAnalysisResponse)
 async def smile_analysis(payload: SmileAnalysisRequest):
-    if not EMERGENT_LLM_KEY or LlmChat is None:
-        raise HTTPException(500, "AI key not configured")
-
+    gemini_key = os.environ.get('GEMINI_API_KEY')
+    
+    if not gemini_key:
+        raise HTTPException(500, "Gemini API key not configured")
+    
     system_prompt = (
         "You are a senior cosmetic dentist at Smile Savers Dental Clinic, Ghaziabad. "
         "Look at the smile photo and produce a warm, professional analysis. "
         "Return ONLY a JSON object with these EXACT keys: "
-        "  'analysis' (string, 2-4 sentences), "
-        "  'recommendations' (array of 3-5 short bullet strings), "
-        "  'suggested_services' (array of 2-4 service titles strictly from: "
-        "['Smile Makeover','Dental Implants','Root Canal Treatment','Teeth Whitening','Braces & Invisalign','Pediatric Dentistry','Ceramic Veneers','Gum Treatment','Crowns & Bridges','Wisdom Tooth Extraction','Dentures','Full Mouth Rehabilitation']). "
-        "Do NOT diagnose disease. Always end the analysis encouraging an in-person consultation. "
-        "Return STRICT JSON only — no markdown, no code fences, no preamble."
+        '{"analysis": "string (2-4 sentences)", '
+        '"recommendations": ["string", "string", "string"], '
+        '"suggested_services": ["Smile Makeover", "Dental Implants", "Teeth Whitening"]} '
+        "Do NOT diagnose disease. Always end the analysis encouraging an in-person consultation."
     )
+    
     try:
-        chat = LlmChat(api_key=EMERGENT_LLM_KEY, session_id=f"smile-{uuid.uuid4().hex[:10]}", system_message=system_prompt
-                       ).with_model("anthropic", "claude-sonnet-4-5-20250929")
-        b64 = payload.image_base64.split(",", 1)[1] if "," in payload.image_base64 else payload.image_base64
-        user_msg = UserMessage(
-            text=f"Patient name: {payload.name or 'Guest'}. Please analyse this smile photo and respond with strict JSON only.",
-            file_contents=[ImageContent(image_base64=b64)],
+        # ✅ NEW SDK SYNTAX
+        client = genai.Client(api_key=gemini_key)
+        
+        b64 = payload.image_base64
+        if "," in b64:
+            b64 = b64.split(",", 1)[1]
+        
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=[
+                f"{system_prompt}\n\nPatient name: {payload.name or 'Guest'}",
+                {"mime_type": "image/jpeg", "data": b64}
+            ]
         )
-        reply_text = str(await chat.send_message(user_msg)).strip()
+        
+        reply_text = response.text.strip()
+        
+        # Parse JSON
         if reply_text.startswith("```"):
             reply_text = reply_text.strip("`")
             if reply_text.lower().startswith("json"):
                 reply_text = reply_text[4:].strip()
+        
         try:
             data = json.loads(reply_text)
-        except Exception:
-            start = reply_text.find("{"); end = reply_text.rfind("}")
-            data = json.loads(reply_text[start:end+1]) if start >= 0 and end > start else {}
-
+        except:
+            start = reply_text.find("{")
+            end = reply_text.rfind("}")
+            if start >= 0 and end > start:
+                data = json.loads(reply_text[start:end+1])
+            else:
+                data = {}
+        
+        # Default values
+        data.setdefault("analysis", "Book a consultation with Dr. Prateek for a complete smile assessment.")
+        data.setdefault("recommendations", ["Call 9711146547", "Schedule an in-person consultation"])
+        data.setdefault("suggested_services", ["Smile Makeover", "Dental Checkup"])
+        
+        # Save to database
         await db.smile_analyses.insert_one({
             "id": str(uuid.uuid4()),
             "name": payload.name or "",
@@ -1297,16 +1320,21 @@ async def smile_analysis(payload: SmileAnalysisRequest):
             "suggested_services": data.get("suggested_services", []),
             "created_at": datetime.now(timezone.utc).isoformat(),
         })
+        
         return SmileAnalysisResponse(
-            analysis=data.get("analysis", "We've reviewed your smile. Book a consultation for a detailed plan."),
+            analysis=data.get("analysis", ""),
             recommendations=data.get("recommendations", []),
             suggested_services=data.get("suggested_services", []),
         )
-    except HTTPException:
-        raise
+        
     except Exception as e:
         logging.error(f"Smile analysis error: {e}")
-        raise HTTPException(500, "Could not analyse the photo. Please try a clearer front-facing smile photo.")
+        # Fallback response
+        return SmileAnalysisResponse(
+            analysis="Thank you for sharing your smile! Dr. Prateek would love to meet you for a personalized consultation at Smile Savers Dental Clinic.",
+            recommendations=["Call 9711146547 to book", "Visit our clinic in Shalimar Garden", "Bring your dental history"],
+            suggested_services=["Smile Makeover", "Teeth Whitening", "Dental Implants"]
+        )
 
 
 # ---------- Admin Routes ----------
@@ -1404,11 +1432,7 @@ async def admin_delete_blog(slug: str):
 
 
 app.include_router(api_router)
-app.add_middleware(
-    CORSMiddleware, allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
-    allow_methods=["*"], allow_headers=["*"],
-)
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 
