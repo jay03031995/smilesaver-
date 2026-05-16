@@ -12,7 +12,11 @@ from typing import List, Optional
 from datetime import datetime, timezone
 from collections import defaultdict, deque
 
+from google.genai import types
+
 from google import genai
+
+from groq import Groq
 
 try:
     import psycopg2
@@ -329,6 +333,7 @@ else:
 
 EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY')
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
+GROQ_API_KEY = os.environ.get('GROQ_API_KEY')
 ADMIN_TOKEN = os.environ.get('ADMIN_TOKEN', 'smilesavers2026')
 CLINIC_NAME = "Smile Saver Dental Clinic"
 CLINIC_PHONE = "9711146547"
@@ -1229,9 +1234,9 @@ async def create_contact(payload: ContactCreate):
 
 @api_router.post("/chat", response_model=ChatResponse)
 async def chat_with_ai(payload: ChatRequest):
-    gemini_key = os.environ.get('GEMINI_API_KEY')
+    groq_key = os.environ.get('GROQ_API_KEY')
     
-    if not gemini_key:
+    if not groq_key:
         return ChatResponse(reply=_local_chat_reply(payload.message))
     
     system_prompt = (
@@ -1242,74 +1247,76 @@ async def chat_with_ai(payload: ChatRequest):
     )
     
     try:
-        # ✅ NEW SDK SYNTAX
-        client = genai.Client(api_key=gemini_key)
-        response = client.models.generate_content(
-            model="gemini-2.0-flash",
-            contents=f"{system_prompt}\n\nPatient query: {payload.message}"
+        client = Groq(api_key=groq_key)
+        response = client.chat.completions.create(
+            model="meta-llama/llama-4-scout-17b-16e-instruct",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": payload.message}
+            ],
+            max_tokens=300
         )
-        
-        return ChatResponse(reply=response.text)
+        return ChatResponse(reply=response.choices[0].message.content)
     except Exception as e:
-        logging.error(f"Gemini chat error: {e}")
+        logging.error(f"Groq chat error: {e}")
         return ChatResponse(reply=_local_chat_reply(payload.message))
 
 
 @api_router.post("/smile-analysis", response_model=SmileAnalysisResponse)
 async def smile_analysis(payload: SmileAnalysisRequest):
-    gemini_key = os.environ.get('GEMINI_API_KEY')
+    groq_key = os.environ.get('GROQ_API_KEY')
     
-    if not gemini_key:
-        raise HTTPException(500, "Gemini API key not configured")
+    if not groq_key:
+        return SmileAnalysisResponse(
+            analysis="Please schedule a consultation with Dr. Prateek for a professional smile assessment.",
+            recommendations=["Call 9711146547", "Book online consultation"],
+            suggested_services=["Smile Makeover", "Teeth Whitening"]
+        )
     
     system_prompt = (
-        "You are a senior cosmetic dentist at Smile Savers Dental Clinic, Ghaziabad. "
-        "Look at the smile photo and produce a warm, professional analysis. "
-        "Return ONLY a JSON object with these EXACT keys: "
+        "You are a senior cosmetic dentist. Analyze this smile photo. "
+        "Return ONLY valid JSON with exactly these keys: "
         '{"analysis": "string (2-4 sentences)", '
         '"recommendations": ["string", "string", "string"], '
-        '"suggested_services": ["Smile Makeover", "Dental Implants", "Teeth Whitening"]} '
-        "Do NOT diagnose disease. Always end the analysis encouraging an in-person consultation."
+        '"suggested_services": ["Smile Makeover", "Dental Implants", "Teeth Whitening"]}'
     )
     
     try:
-        # ✅ NEW SDK SYNTAX
-        client = genai.Client(api_key=gemini_key)
+        client = Groq(api_key=groq_key)
         
+        # Extract base64 image
         b64 = payload.image_base64
         if "," in b64:
             b64 = b64.split(",", 1)[1]
         
-        response = client.models.generate_content(
-            model="gemini-2.0-flash",
-            contents=[
-                f"{system_prompt}\n\nPatient name: {payload.name or 'Guest'}",
-                {"mime_type": "image/jpeg", "data": b64}
-            ]
+        response = client.chat.completions.create(
+            model="meta-llama/llama-4-scout-17b-16e-instruct",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": [
+                    {"type": "text", "text": f"Patient: {payload.name or 'Guest'}"},
+                    {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{b64}"}}
+                ]}
+            ],
+            max_tokens=500
         )
         
-        reply_text = response.text.strip()
+        reply_text = response.choices[0].message.content
         
         # Parse JSON
-        if reply_text.startswith("```"):
-            reply_text = reply_text.strip("`")
-            if reply_text.lower().startswith("json"):
-                reply_text = reply_text[4:].strip()
-        
         try:
-            data = json.loads(reply_text)
-        except:
             start = reply_text.find("{")
             end = reply_text.rfind("}")
             if start >= 0 and end > start:
                 data = json.loads(reply_text[start:end+1])
             else:
                 data = {}
+        except:
+            data = {}
         
-        # Default values
         data.setdefault("analysis", "Book a consultation with Dr. Prateek for a complete smile assessment.")
         data.setdefault("recommendations", ["Call 9711146547", "Schedule an in-person consultation"])
-        data.setdefault("suggested_services", ["Smile Makeover", "Dental Checkup"])
+        data.setdefault("suggested_services", ["Smile Makeover", "Teeth Whitening"])
         
         # Save to database
         await db.smile_analyses.insert_one({
@@ -1328,12 +1335,11 @@ async def smile_analysis(payload: SmileAnalysisRequest):
         )
         
     except Exception as e:
-        logging.error(f"Smile analysis error: {e}")
-        # Fallback response
+        logging.error(f"Groq analysis error: {e}")
         return SmileAnalysisResponse(
-            analysis="Thank you for sharing your smile! Dr. Prateek would love to meet you for a personalized consultation at Smile Savers Dental Clinic.",
-            recommendations=["Call 9711146547 to book", "Visit our clinic in Shalimar Garden", "Bring your dental history"],
-            suggested_services=["Smile Makeover", "Teeth Whitening", "Dental Implants"]
+            analysis="Our AI is currently busy. Please call 9711146547 to book a consultation.",
+            recommendations=["Call 9711146547", "Book online"],
+            suggested_services=["Smile Makeover", "Dental Checkup"]
         )
 
 
