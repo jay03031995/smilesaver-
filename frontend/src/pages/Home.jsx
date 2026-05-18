@@ -136,7 +136,7 @@ export default function Home() {
               </Link>
             </div>
 
-            <div ref={heroStats} className="flex flex-wrap items-center gap-6 mt-5 pt-5 border-t border-cream/80">
+            <div ref={heroStats} className="flex flex-nowrap sm:flex-wrap items-center gap-2 sm:gap-6 mt-5 pt-5 border-t border-cream/80">
               <div>
                 <div className="font-serif text-3xl text-ink">16+</div>
                 <div className="text-xs tracking-[0.16em] uppercase text-inkmuted">Years</div>
@@ -208,7 +208,7 @@ export default function Home() {
               </div>
 
               {/* Floating tag - rating */}
-              <div className="absolute -right-3 top-1/3 md:-right-8 px-4 py-3 rounded-2xl bg-ink text-bgmain shadow-xl flex items-center gap-2.5">
+              <div className="absolute -right-3 top-1 md:-right-8 px-4 py-3 rounded-2xl bg-ink text-bgmain shadow-xl flex items-center gap-2.5">
                 <div className="flex flex-col items-center">
                   <span className="font-serif text-2xl leading-none">{reviewSummary.rating}</span>
                   <div className="flex gap-0.5 mt-1">
@@ -222,7 +222,7 @@ export default function Home() {
               </div>
 
               {/* Floating tag - implants count */}
-              <div className="absolute -left-3 -bottom-4 md:-left-10 md:-bottom-6 px-4 py-3 rounded-2xl bg-cocoa text-bgmain shadow-lg">
+              <div className="absolute -left-1 -bottom-12 md:-left-1 md:-bottom-12 px-4 py-3 rounded-2xl bg-cocoa text-bgmain shadow-lg">
                 <div className="font-serif text-2xl leading-none">2,500+</div>
                 <div className="text-[0.6rem] tracking-[0.18em] uppercase mt-1">Implants Placed</div>
               </div>
