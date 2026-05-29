@@ -1,14 +1,21 @@
 import React from "react";
 import { Award, ShieldCheck, Beaker, Heart, Star } from "lucide-react";
 import Reveal from "../components/Reveal";
+import SEO from "../components/SEO";
 
 export default function About() {
   return (
     <div data-testid="about-page" className="pt-32 pb-16">
+      <SEO
+        title="About Dr Prateek Dental Clinic | NABH Accredited Dental Care"
+        description="Learn about Dr Prateek Dental Clinic, a NABH-accredited dental clinic in Ghaziabad offering ethical, specialist-led dental care, smile makeovers, implants and advanced dentistry."
+        path="/about"
+        keywords="about dentist Ghaziabad, Dr Prateek Aggarwal, NABH dental clinic, Smile Savers Dental Clinic, dental care Ghaziabad"
+      />
       <section className="px-5 md:px-8 mb-20">
         <div className="max-w-5xl mx-auto text-center">
           <div className="eyebrow mb-3">About Smile Savers Dental Clinic</div>
-          <h1 className="h-display text-5xl md:text-7xl text-ink mb-6">A clinic where care<br/><span className="italic text-cocoa">comes before everything.</span></h1>
+          <h1 className="h-display text-5xl md:text-7xl text-ink mb-6">A clinic where care<br /><span className="italic text-cocoa">comes before everything.</span></h1>
           <p className="text-lg text-inkmuted max-w-2xl mx-auto leading-relaxed">
             For over 25 years, Smile Savers Dental Clinic has been Ghaziabad's most trusted address for honest, world-class dentistry. NABH-accredited and ISO certified, we marry science with artistry.
           </p>
@@ -18,7 +25,7 @@ export default function About() {
       <section className="px-5 md:px-8 mb-24">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
           <Reveal>
-            <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80" alt="Clinic interior" className="rounded-[2rem] aspect-[4/5] object-cover w-full"/>
+            <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80" alt="Clinic interior" className="rounded-[2rem] aspect-[4/5] object-cover w-full" />
           </Reveal>
           <Reveal delay={0.15}>
             <div className="eyebrow mb-3">Our Story</div>
@@ -40,7 +47,7 @@ export default function About() {
         <div className="max-w-7xl mx-auto bg-ink text-bgmain rounded-[2rem] p-10 md:p-16 grid md:grid-cols-2 gap-10 items-center">
           <div>
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-bgmain/10 border border-bgmain/20 mb-6">
-              <Award size={14} className="text-cream"/>
+              <Award size={14} className="text-cream" />
               <span className="text-xs tracking-[0.18em] uppercase text-cream font-semibold">NABH Accredited Clinic</span>
             </div>
             <h2 className="font-serif text-4xl md:text-5xl mb-6">India's gold standard for healthcare quality.</h2>
@@ -79,10 +86,10 @@ export default function About() {
             ].map((p, i) => {
               const I = p.icon;
               return (
-                <Reveal key={p.t} delay={i*0.07}>
+                <Reveal key={p.t} delay={i * 0.07}>
                   <div className="rounded-3xl bg-beige p-8 flex gap-5 h-full">
                     <div className="w-12 h-12 rounded-2xl bg-ink text-bgmain flex items-center justify-center flex-shrink-0">
-                      <I size={20}/>
+                      <I size={20} />
                     </div>
                     <div>
                       <h3 className="font-serif text-2xl text-ink mb-2">{p.t}</h3>

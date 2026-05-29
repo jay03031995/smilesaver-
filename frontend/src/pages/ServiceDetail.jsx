@@ -4,6 +4,7 @@ import { ArrowLeft, Check, Clock, IndianRupee, Plus, Minus, ArrowRight, Beaker }
 import { fetchService, fetchServices } from "../lib/api";
 import BookingStepper from "../components/BookingStepper";
 import Reveal from "../components/Reveal";
+import SEO from "../components/SEO";
 
 export default function ServiceDetail() {
   const { slug } = useParams();
@@ -22,11 +23,17 @@ export default function ServiceDetail() {
 
   return (
     <div data-testid="service-detail-page" className="pt-28 pb-16">
+      <SEO
+        title={`${service.title} in Ghaziabad | Dr Prateek Dental Clinic`}
+        description={`${service.summary} Book ${service.title} at Dr Prateek Dental Clinic, Ghaziabad.`}
+        path={`/services/${slug}`}
+        keywords={`${service.title} Ghaziabad, dentist Ghaziabad, Dr Prateek Aggarwal, dental clinic Sahibabad`}
+      />
       {/* HERO */}
       <section className="px-5 md:px-8 mb-20">
         <div className="max-w-7xl mx-auto">
           <Link to="/services" className="inline-flex items-center gap-2 text-sm text-inkmuted hover:text-cocoa mb-8" data-testid="back-services">
-            <ArrowLeft size={16}/> Back to all services
+            <ArrowLeft size={16} /> Back to all services
           </Link>
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <Reveal>
@@ -35,15 +42,15 @@ export default function ServiceDetail() {
               <p className="text-lg text-inkmuted leading-relaxed mb-8">{service.summary}</p>
               <div className="flex flex-wrap gap-3 mb-8">
                 <div className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-beige">
-                  <Clock size={15} className="text-cocoa"/>
+                  <Clock size={15} className="text-cocoa" />
                   <span className="text-sm text-ink">{service.duration}</span>
                 </div>
               </div>
-              <a href="#book" className="liquid-glass-dark inline-flex items-center gap-2" data-testid="hero-book-service-btn">Book This Treatment <ArrowRight size={16}/></a>
+              <a href="#book" className="liquid-glass-dark inline-flex items-center gap-2" data-testid="hero-book-service-btn">Book This Treatment <ArrowRight size={16} /></a>
             </Reveal>
             <Reveal delay={0.15}>
               <div className="rounded-[2rem] overflow-hidden aspect-[4/5]">
-                <img src={service.image} alt={service.title} className="w-full h-full object-cover"/>
+                <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
               </div>
             </Reveal>
           </div>
@@ -66,7 +73,7 @@ export default function ServiceDetail() {
               <ul className="space-y-4">
                 {service.benefits?.map(b => (
                   <li key={b} className="flex gap-3 text-sm text-ink">
-                    <Check size={18} className="text-cocoa flex-shrink-0 mt-0.5"/>
+                    <Check size={18} className="text-cocoa flex-shrink-0 mt-0.5" />
                     <span>{b}</span>
                   </li>
                 ))}
@@ -87,9 +94,9 @@ export default function ServiceDetail() {
           </Reveal>
           <div className="grid md:grid-cols-4 gap-6">
             {service.process?.map((p, i) => (
-              <Reveal key={p.step} delay={i*0.1}>
+              <Reveal key={p.step} delay={i * 0.1}>
                 <div className="relative">
-                  <div className="font-serif text-6xl text-cocoa/30 mb-2 leading-none">0{i+1}</div>
+                  <div className="font-serif text-6xl text-cocoa/30 mb-2 leading-none">0{i + 1}</div>
                   <h3 className="font-serif text-xl text-ink mb-3 leading-tight">{p.step}</h3>
                   <p className="text-sm text-inkmuted leading-relaxed">{p.desc}</p>
                 </div>
@@ -105,7 +112,7 @@ export default function ServiceDetail() {
           <div className="max-w-7xl mx-auto rounded-[2rem] bg-ink text-bgmain p-10 md:p-16 grid md:grid-cols-2 gap-10 items-center">
             <Reveal>
               <div className="w-12 h-12 rounded-2xl bg-bgmain/10 flex items-center justify-center mb-5">
-                <Beaker size={20} className="text-cream"/>
+                <Beaker size={20} className="text-cream" />
               </div>
               <div className="eyebrow text-cream mb-3">Globally-trusted materials</div>
               <h2 className="font-serif text-3xl md:text-5xl mb-5">Only the brands the world's best dentists use.</h2>
@@ -115,7 +122,7 @@ export default function ServiceDetail() {
               <ul className="space-y-3">
                 {service.materials.map(m => (
                   <li key={m} className="flex gap-3 items-center px-5 py-3.5 rounded-2xl bg-bgmain/5 border border-bgmain/10">
-                    <div className="w-2 h-2 rounded-full bg-cream"/>
+                    <div className="w-2 h-2 rounded-full bg-cream" />
                     <span className="text-bgmain">{m}</span>
                   </li>
                 ))}
@@ -137,7 +144,7 @@ export default function ServiceDetail() {
             </Reveal>
             <div className="space-y-3">
               {service.faqs.map((f, i) => (
-                <Reveal key={i} delay={i*0.05}>
+                <Reveal key={i} delay={i * 0.05}>
                   <button
                     onClick={() => setOpenFaq(openFaq === i ? -1 : i)}
                     data-testid={`faq-${i}`}
@@ -146,7 +153,7 @@ export default function ServiceDetail() {
                     <div className="flex items-center justify-between gap-5">
                       <span className="font-serif text-lg md:text-xl text-ink">{f.q}</span>
                       <span className="w-8 h-8 rounded-full bg-bgmain flex items-center justify-center flex-shrink-0">
-                        {openFaq === i ? <Minus size={16}/> : <Plus size={16}/>}
+                        {openFaq === i ? <Minus size={16} /> : <Plus size={16} />}
                       </span>
                     </div>
                     {openFaq === i && (
@@ -169,7 +176,7 @@ export default function ServiceDetail() {
               <h2 className="font-serif text-3xl md:text-4xl text-ink">Reserve your {service.title} consultation</h2>
             </div>
           </Reveal>
-          <BookingStepper services={allServices} defaultService={service.title}/>
+          <BookingStepper services={allServices} defaultService={service.title} />
         </div>
       </section>
 
@@ -183,7 +190,7 @@ export default function ServiceDetail() {
             {allServices.filter(s => s.slug !== slug).slice(0, 3).map(s => (
               <Link key={s.slug} to={`/services/${s.slug}`} className="group rounded-3xl overflow-hidden bg-beige" data-testid={`related-${s.slug}`}>
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img src={s.image} alt={s.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"/>
+                  <img src={s.image} alt={s.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
                 </div>
                 <div className="p-5">
                   <h3 className="font-serif text-xl text-ink">{s.title}</h3>
