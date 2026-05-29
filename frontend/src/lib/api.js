@@ -33,3 +33,5 @@ export const adminListBlog = () => api.get("/admin/blog", admHeaders()).then(r =
 export const adminCreateBlog = (payload) => api.post("/admin/blog", payload, admHeaders()).then(r => r.data);
 export const adminUpdateBlog = (slug, payload) => api.put(`/admin/blog/${slug}`, payload, admHeaders()).then(r => r.data);
 export const adminDeleteBlog = (slug) => api.delete(`/admin/blog/${slug}`, admHeaders()).then(r => r.data);
+export const fetchBookedSlots = (date) =>
+  api.get(`/booked-slots?date=${date}`).then(r => r.data);

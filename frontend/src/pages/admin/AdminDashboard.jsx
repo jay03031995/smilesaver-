@@ -29,7 +29,7 @@ export default function AdminDashboard() {
         adminListBlog().catch(() => []),
       ]);
       setBookings(b); setContacts(c); setAnalyses(s); setPosts(p);
-    } catch {}
+    } catch { }
     setLoading(false);
   };
 
@@ -56,10 +56,10 @@ export default function AdminDashboard() {
           </div>
           <div className="flex gap-2">
             <button onClick={load} className="liquid-glass !py-2 !px-4 inline-flex items-center gap-2 text-sm" data-testid="admin-refresh">
-              <RefreshCw size={14}/> Refresh
+              <RefreshCw size={14} /> Refresh
             </button>
             <button onClick={logout} className="liquid-glass-dark !py-2 !px-4 inline-flex items-center gap-2 text-sm" data-testid="admin-logout">
-              <LogOut size={14}/> Logout
+              <LogOut size={14} /> Logout
             </button>
           </div>
         </header>
@@ -86,47 +86,88 @@ export default function AdminDashboard() {
             return (
               <button
                 key={t.id} onClick={() => setTab(t.id)} data-testid={`tab-${t.id}`}
-                className={`px-5 py-2.5 rounded-full text-sm flex items-center gap-2 whitespace-nowrap transition-all ${
-                  tab === t.id ? "bg-ink text-bgmain" : "bg-beige text-ink hover:bg-cream"
-                }`}
+                className={`px-5 py-2.5 rounded-full text-sm flex items-center gap-2 whitespace-nowrap transition-all ${tab === t.id ? "bg-ink text-bgmain" : "bg-beige text-ink hover:bg-cream"
+                  }`}
               >
-                <I size={14}/> {t.label}
+                <I size={14} /> {t.label}
               </button>
             );
           })}
         </div>
 
         {loading ? (
-          <div className="text-center py-20"><Loader2 className="animate-spin mx-auto text-mocha" size={32}/></div>
+          <div className="text-center py-20"><Loader2 className="animate-spin mx-auto text-mocha" size={32} /></div>
         ) : (
           <div className="rounded-3xl bg-bgmain border border-cream overflow-hidden">
             {tab === "bookings" && <Table rows={bookings} columns={[
-              { k: "created_at", l: "Date", fmt: (v) => v?.slice(0, 16).replace("T", " ") },
+              {
+                k: "created_at",
+                l: "Date",
+                fmt: (v) =>
+                  v
+                    ? new Date(v).toLocaleString("en-IN", {
+                      timeZone: "Asia/Kolkata",
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })
+                    : ""
+              },
               { k: "name", l: "Name" },
               { k: "phone", l: "Phone" },
               { k: "service", l: "Service" },
               { k: "preferred_date", l: "Wants" },
               { k: "preferred_time", l: "Time" },
-            ]}/>}
+            ]} />}
             {tab === "contacts" && <Table rows={contacts} columns={[
-              { k: "created_at", l: "Date", fmt: (v) => v?.slice(0, 16).replace("T", " ") },
+              {
+                k: "created_at",
+                l: "Date",
+                fmt: (v) =>
+                  v
+                    ? new Date(v).toLocaleString("en-IN", {
+                      timeZone: "Asia/Kolkata",
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })
+                    : ""
+              },
               { k: "name", l: "Name" },
               { k: "email", l: "Email" },
               { k: "phone", l: "Phone" },
               { k: "message", l: "Message", fmt: (v) => v?.slice(0, 80) + (v?.length > 80 ? "…" : "") },
-            ]}/>}
+            ]} />}
             {tab === "smile" && <Table rows={analyses} columns={[
-              { k: "created_at", l: "Date", fmt: (v) => v?.slice(0, 16).replace("T", " ") },
+              {
+                k: "created_at",
+                l: "Date",
+                fmt: (v) =>
+                  v
+                    ? new Date(v).toLocaleString("en-IN", {
+                      timeZone: "Asia/Kolkata",
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })
+                    : ""
+              },
               { k: "name", l: "Name", fmt: (v) => v || "—" },
               { k: "analysis", l: "Analysis", fmt: (v) => v?.slice(0, 100) + "…" },
               { k: "suggested_services", l: "Suggested", fmt: (v) => Array.isArray(v) ? v.join(", ") : "" },
-            ]}/>}
+            ]} />}
             {tab === "blog" && (
               <div>
                 <div className="flex justify-between items-center p-5 border-b border-cream">
                   <div className="text-sm text-inkmuted">{posts.length} posts</div>
                   <Link to="/admin/blog/new" data-testid="new-post-btn" className="liquid-glass-dark !py-2 !px-4 inline-flex items-center gap-2 text-sm">
-                    <Plus size={14}/> New Post
+                    <Plus size={14} /> New Post
                   </Link>
                 </div>
                 <table className="w-full text-sm">
@@ -152,10 +193,10 @@ export default function AdminDashboard() {
                         </td>
                         <td className="px-5 py-3 text-right">
                           <Link to={`/admin/blog/${p.slug}/edit`} className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs bg-beige hover:bg-cream mr-2" data-testid={`edit-${p.slug}`}>
-                            <Edit2 size={12}/> Edit
+                            <Edit2 size={12} /> Edit
                           </Link>
                           <button onClick={() => handleDelete(p.slug)} className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs bg-red-50 text-red-700 hover:bg-red-100" data-testid={`delete-${p.slug}`}>
-                            <Trash2 size={12}/> Delete
+                            <Trash2 size={12} /> Delete
                           </button>
                         </td>
                       </tr>

@@ -51,7 +51,7 @@ function App() {
       <BrowserRouter>
         <SmoothScroll/>
         <ScrollTop/>
-        <ToothCursor/>
+        {window.innerWidth > 768 && <ToothCursor />}
         <ChromeWrapper>
           <Routes>
             <Route path="/" element={<Home/>}/>

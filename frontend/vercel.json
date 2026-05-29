@@ -1,5 +1,12 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "build",
-  "framework": "create-react-app"
+  "framework": "create-react-app",
+
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "http://77.37.47.51:8001/api/:path*"
+    }
+  ]
 }

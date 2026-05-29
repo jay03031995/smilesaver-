@@ -1,0 +1,65 @@
+# Dr Prateek Dental Clinic
+
+> NABH-accredited dental clinic in Ghaziabad providing cosmetic, restorative, implant, and general dentistry services.
+
+Website: https://www.drprateek.com
+Sitemap: https://www.drprateek.com/sitemap.xml
+
+## Important Pages
+
+- Home: https://www.drprateek.com/
+- About: https://www.drprateek.com/about
+- Services: https://www.drprateek.com/services
+- Doctors: https://www.drprateek.com/doctors
+- Gallery: https://www.drprateek.com/gallery
+- Blog: https://www.drprateek.com/blog
+- Contact: https://www.drprateek.com/contact
+- Book Appointment: https://www.drprateek.com/booking
+- Smile Analysis: https://www.drprateek.com/smile-analysis
+
+## Key Services
+
+- Dental Implants
+- Root Canal Treatment (RCT)
+- Smile Makeover
+- Teeth Whitening
+- Braces & Aligners
+- Invisalign
+- Pediatric Dentistry
+- Veneers
+- Gum Treatment
+- Crowns & Bridges
+- Wisdom Tooth Extraction
+- Dentures
+- Full Mouth Rehabilitation
+
+## Clinic Information
+
+- Clinic: Dr Prateek Dental Clinic
+- Founder: Dr. Prateek Aggarwal
+- Location: Sahibabad, Ghaziabad, Uttar Pradesh, India
+- Phone: +91-9711146547
+
+## AI Access Policy
+
+AI assistants and search crawlers may access public informational content for indexing, research, and answer generation.
+
+Allowed:
+- GPTBot
+- ChatGPT-User
+- PerplexityBot
+- Google-Extended
+- ClaudeBot
+- CCBot
+
+Restricted:
+- Admin routes
+- Authentication pages
+- Patient/private data
+- Internal management systems
+
+## Technical Resources
+
+Robots: https://www.drprateek.com/robots.txt
+Sitemap: https://www.drprateek.com/sitemap.xml
+Canonical Domain: https://www.drprateek.com

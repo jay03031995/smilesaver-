@@ -1,3 +1,26 @@
 User-agent: *
 Allow: /
-Sitemap: https://smilesaversdental.in/sitemap.xml
+
+# AI Crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Block private/admin areas if they exist
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /manage
+Disallow: /api/admin
+
+Sitemap: https://www.drprateek.com/sitemap.xml
