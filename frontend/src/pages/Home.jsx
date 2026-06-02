@@ -10,7 +10,7 @@ import SEO from "../components/SEO";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const NABH_LOGO = "https://customer-assets.emergentagent.com/job_dental-ghaziabad/artifacts/yyxskkdz_image.png";
+const NABH_LOGO = "/images/nabh.jpeg";
 const SVC_ICONS = { Sparkles, Drill, Activity, Sun, AlignCenter, Baby, Layers, Heart, Crown, Scissors, Smile, Star };
 
 export default function Home() {
@@ -40,7 +40,23 @@ export default function Home() {
     fetchServices().then(setServices);
     fetchTestimonials().then(setTestimonials);
     fetchDoctors().then(d => setDoctor(d[0]));
-    fetchGallery().then(setGallery);
+    setGallery([
+      {
+        category: "Clinic",
+        image: "/images/gallery/WhatsApp Image 2026-05-18 at 12.18.14 PM.jpeg",
+        caption: "Smile Savers Dental Clinic",
+      },
+      {
+        category: "Patients",
+        image: "/images/gallery/DSC_2779.JPG",
+        caption: "Happy Patient",
+      },
+      {
+        category: "Awards",
+        image: "/images/gallery/Jaya Prada.jpg",
+        caption: "National Pride Healthcare Award",
+      },
+    ]);
     fetchReviewSummary().then(setReviewSummary).catch(() => { });
   }, []);
 
@@ -370,7 +386,11 @@ export default function Home() {
           <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-10 items-center">
             <Reveal className="md:col-span-5">
               <div className="rounded-[2rem] overflow-hidden aspect-[4/5]">
-                <img src={doctor.image} alt={doctor.name} className="w-full h-full object-cover" />
+                <img
+                  src="/images/drprateek.jpeg"
+                  alt={doctor.name}
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
             </Reveal>
             <div className="md:col-span-7">

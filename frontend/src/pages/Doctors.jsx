@@ -28,7 +28,11 @@ export default function Doctors() {
         <Reveal>
           <div className="grid md:grid-cols-12 gap-8 rounded-[2rem] bg-beige overflow-hidden" data-testid="doctor-hero-card">
             <div className="md:col-span-5 aspect-[4/5] md:aspect-auto">
-              <img src={doctor.image} alt={doctor.name} className="w-full h-full object-cover" />
+              <img
+                src="/images/drprateek.jpeg"
+                alt={doctor.name}
+                className="w-full h-full object-cover object-top"
+              />
             </div>
             <div className="md:col-span-7 p-8 md:p-12 flex flex-col justify-center">
               <div className="flex items-center gap-2 mb-4">

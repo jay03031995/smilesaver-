@@ -13,8 +13,8 @@ const NAV = [
   { to: "/contact", label: "Contact" },
 ];
 
-export const CLINIC_LOGO = "https://customer-assets.emergentagent.com/job_dental-ghaziabad/artifacts/ahaez3yf_Untitled%20design%20%282%29.png";
-export const NABH_LOGO = "https://customer-assets.emergentagent.com/job_dental-ghaziabad/artifacts/yyxskkdz_image.png";
+export const CLINIC_LOGO = "/images/logo.jpeg";
+export const NABH_LOGO = "/images/nabh.jpeg";
 export const CLINIC_PHONE = "9711146547";
 
 export default function Header() {

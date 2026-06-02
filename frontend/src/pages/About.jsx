@@ -25,7 +25,11 @@ export default function About() {
       <section className="px-5 md:px-8 mb-24">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
           <Reveal>
-            <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80" alt="Clinic interior" className="rounded-[2rem] aspect-[4/5] object-cover w-full" />
+            <img
+              src="/images/gallery/WhatsApp Image 2026-05-18 at 12.18.14 PM.jpeg"
+              alt="Smile Savers Dental Clinic Interior"
+              className="rounded-[2rem] aspect-[4/5] object-cover object-center w-full"
+            />
           </Reveal>
           <Reveal delay={0.15}>
             <div className="eyebrow mb-3">Our Story</div>

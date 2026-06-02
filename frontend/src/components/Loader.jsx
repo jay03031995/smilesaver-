@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const LOGO_URL = "https://customer-assets.emergentagent.com/job_dental-ghaziabad/artifacts/ahaez3yf_Untitled%20design%20%282%29.png";
+const LOGO_URL = "/images/logo.jpeg";
 
 export default function Loader({ onDone }) {
   const [hide, setHide] = useState(false);
