@@ -28,7 +28,9 @@ export default function Blog() {
           <Reveal>
             <Link to={`/blog/${posts[0].slug}`} className="group grid md:grid-cols-2 gap-8 rounded-[2rem] overflow-hidden bg-beige mb-10" data-testid="featured-post">
               <div className="aspect-[4/3] md:aspect-auto overflow-hidden">
-                <img src={posts[0].cover} alt={posts[0].title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+                <img
+                  src="/images/gallery/WhatsApp Image 2026-05-18 at 12.18.14 PM.jpeg"
+                  alt={posts[0].title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
               </div>
               <div className="p-8 md:p-12 flex flex-col justify-center">
                 <div className="flex flex-wrap gap-2 mb-4">
@@ -60,7 +62,9 @@ export default function Blog() {
             <Reveal key={p.slug} delay={(i % 3) * 0.07}>
               <Link to={`/blog/${p.slug}`} className="group block rounded-3xl overflow-hidden bg-bgmain border border-cream hover:-translate-y-1 transition-all duration-500 h-full" data-testid={`post-${p.slug}`}>
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img src={p.cover} alt={p.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
+                  <img
+                    src="/images/gallery/WhatsApp Image 2026-05-18 at 12.18.14 PM.jpeg"
+                    alt={p.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
                 </div>
                 <div className="p-6">
                   <span className="inline-block px-3 py-1 rounded-full bg-beige text-[0.65rem] uppercase tracking-[0.14em] text-ink font-semibold mb-3">{p.category}</span>
