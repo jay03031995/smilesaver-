@@ -12,7 +12,7 @@ export default function Blog() {
   return (
     <div data-testid="blog-page" className="pt-32 pb-16 px-5 md:px-8">
       <SEO
-        title="Dental Blog | Oral Health Tips by Dr Prateek Dental Clinic"
+        title="Dental Blog | Oral Health Tips by Smile Savers Dental Clinic"
         description="Read dentist-written articles on dental implants, root canal treatment, smile makeover, aligners, teeth whitening and oral health care in Ghaziabad."
         path="/blog"
         keywords="dental blog Ghaziabad, oral health tips, dental implants blog, root canal treatment advice, smile makeover tips"
@@ -29,7 +29,7 @@ export default function Blog() {
             <Link to={`/blog/${posts[0].slug}`} className="group grid md:grid-cols-2 gap-8 rounded-[2rem] overflow-hidden bg-beige mb-10" data-testid="featured-post">
               <div className="aspect-[4/3] md:aspect-auto overflow-hidden">
                 <img
-                  src="/images/gallery/WhatsApp Image 2026-05-18 at 12.18.14 PM.jpeg"
+                  src={posts[0].cover}
                   alt={posts[0].title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
               </div>
               <div className="p-8 md:p-12 flex flex-col justify-center">
@@ -63,7 +63,7 @@ export default function Blog() {
               <Link to={`/blog/${p.slug}`} className="group block rounded-3xl overflow-hidden bg-bgmain border border-cream hover:-translate-y-1 transition-all duration-500 h-full" data-testid={`post-${p.slug}`}>
                 <div className="aspect-[4/3] overflow-hidden">
                   <img
-                    src="/images/gallery/WhatsApp Image 2026-05-18 at 12.18.14 PM.jpeg"
+                    src={p.cover}
                     alt={p.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
                 </div>
                 <div className="p-6">
