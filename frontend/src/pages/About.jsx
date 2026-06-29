@@ -7,8 +7,8 @@ export default function About() {
   return (
     <div data-testid="about-page" className="pt-32 pb-16">
       <SEO
-        title="About Dr Prateek Dental Clinic | NABH Accredited Dental Care"
-        description="Learn about Dr Prateek Dental Clinic, a NABH-accredited dental clinic in Ghaziabad offering ethical, specialist-led dental care, smile makeovers, implants and advanced dentistry."
+        title="About Smile Savers Dental Clinic | NABH Accredited Dental Care"
+        description="Learn about Smile Savers Dental Clinic, a NABH-accredited dental clinic in Ghaziabad offering ethical, specialist-led dental care, smile makeovers, implants and advanced dentistry."
         path="/about"
         keywords="about dentist Ghaziabad, Dr Prateek Aggarwal, NABH dental clinic, Smile Savers Dental Clinic, dental care Ghaziabad"
       />
