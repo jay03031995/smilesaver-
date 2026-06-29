@@ -129,8 +129,8 @@ export default function Home() {
   return (
     <div data-testid="home-page">
       <SEO
-        title="Dr Prateek Dental Clinic | NABH Accredited Dentist in Ghaziabad"
-        description="Visit Dr Prateek Dental Clinic in Ghaziabad for dental implants, painless RCT, smile makeover, teeth whitening, Invisalign and family dental care."
+        title="Smile Savers Dental Clinic"
+        description="Smile Savers Dental Clinic is a NABH-accredited dental clinic in Ghaziabad offering dental implants, painless RCT, Invisalign, smile makeovers & teeth whitening."
         path="/"
         keywords="dentist Ghaziabad, dental clinic Sahibabad, Dr Prateek Aggarwal, dental implants Ghaziabad, root canal Ghaziabad"
       />
