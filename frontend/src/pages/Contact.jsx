@@ -26,8 +26,8 @@ export default function Contact() {
   return (
     <div data-testid="contact-page" className="pt-32 pb-16 px-5 md:px-8">
       <SEO
-        title="Contact Dr Prateek Dental Clinic | Dentist in Ghaziabad"
-        description="Contact Dr Prateek Dental Clinic in Ghaziabad. Call, email or book your appointment online for implants, RCT, smile makeover and general dentistry."
+        title="Contact Smile Savers Dental Clinic | Dentist in Ghaziabad"
+        description="Contact Smile Savers Dental Clinic in Ghaziabad. Call, email or book your appointment online for implants, RCT, smile makeover and general dentistry."
         path="/contact"
         keywords="contact dentist Ghaziabad, Dr Prateek contact, dental clinic Sahibabad, book dentist appointment Ghaziabad"
       />
