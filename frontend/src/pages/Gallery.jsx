@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Reveal from "../components/Reveal";
+import SEO from "../components/SEO";
 
 const TABS = ["All", "Clinic", "Patients", "Awards"];
 
@@ -81,6 +82,13 @@ export default function Gallery() {
 
   return (
     <div data-testid="gallery-page" className="pt-32 pb-16 px-5 md:px-8">
+      <SEO
+        title="Dental Clinic Gallery | Smile Savers Dental Clinic Ghaziabad"
+        description="Explore Smile Savers Dental Clinic through our gallery featuring clinic interiors, advanced dental facilities, happy patients, awards and achievements in Ghaziabad."
+        path="/gallery"
+        keywords="dental clinic gallery Ghaziabad, Smile Savers gallery, dental clinic photos, dentist clinic images, dental awards Ghaziabad"
+      />
+
       <section className="max-w-5xl mx-auto text-center mb-12">
         <div className="eyebrow mb-3">Gallery</div>
 
@@ -131,8 +139,8 @@ export default function Gallery() {
                     src={item.image}
                     alt={item.caption}
                     className={`w-full h-full transition-transform duration-700 ${item.category === "Clinic"
-                        ? "object-cover object-center group-hover:scale-105"
-                        : "object-cover object-top group-hover:scale-105"
+                      ? "object-cover object-center group-hover:scale-105"
+                      : "object-cover object-top group-hover:scale-105"
                       }`}
                     loading="lazy"
                   />
