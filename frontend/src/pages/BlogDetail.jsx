@@ -98,7 +98,7 @@ export default function BlogDetail() {
       <div className="max-w-5xl mx-auto px-5 md:px-8 mb-12">
         <div className="rounded-[2rem] overflow-hidden">
           <img
-            src="/images/gallery/WhatsApp Image 2026-05-18 at 12.18.14 PM.jpeg"
+            src={post.author_avatar}
             alt={post.title}
             className="w-full aspect-[16/9] object-cover object-center"
           />
@@ -235,7 +235,7 @@ export default function BlogDetail() {
             <div className="grid md:grid-cols-12 gap-6 items-center">
               <div className="md:col-span-3">
                 <img
-                  src="/images/gallery/WhatsApp Image 2026-05-18 at 12.18.14 PM.jpeg"
+                  src={post.cover}
                   alt={post.title}
                   className="w-full aspect-[16/9] object-cover object-center"
                 />
